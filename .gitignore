@@ -1,0 +1,25 @@
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+
+# Caches and execution data
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.pyc
+__pycache__/
+
+# Local vscode files
+.vscode/
+
+# Local code reviews / temporary reports
+review_report.md
+review_report_*.md

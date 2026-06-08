@@ -1,0 +1,77 @@
+# Antigravity Rules — Coding Standards Configuration
+# Edit these rules to match your team's standards.
+# All agents load this file at startup.
+
+general:
+  max_line_length: 100
+  indent_style: spaces          # "spaces" or "tabs"
+  indent_size: 4
+  max_file_length_lines: 500
+  encoding: utf-8
+
+naming:
+  functions: snake_case          # snake_case | camelCase | PascalCase
+  classes: PascalCase
+  constants: UPPER_SNAKE_CASE
+  variables: snake_case
+  private_prefix: "_"            # underscore prefix for private members
+  max_identifier_length: 40
+
+complexity:
+  max_cyclomatic_complexity: 10
+  max_function_length_lines: 50
+  max_class_length_lines: 300
+  max_parameters: 6
+  max_nesting_depth: 4
+
+security:
+  # Patterns flagged as potential secrets (regex)
+  secret_patterns:
+    - "(?i)(api[_-]?key|secret|password|token|auth)['\"]?\\s*[:=]\\s*['\"][A-Za-z0-9+/=_-]{8,}"
+    - "(?i)aws_access_key_id\\s*=\\s*['\"]?[A-Z0-9]{20}"
+    - "(?i)-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----"
+
+  # OWASP categories to check (set false to disable)
+  owasp_checks:
+    injection: true
+    broken_auth: true
+    sensitive_data_exposure: true
+    xxe: true
+    broken_access_control: true
+    security_misconfiguration: true
+    xss: true
+    insecure_deserialization: true
+    known_vulnerabilities: true
+    insufficient_logging: true
+
+  # Banned functions / modules (by language)
+  banned:
+    python:
+      - eval
+      - exec
+      - compile
+      - "__import__"
+      - pickle.loads
+      - yaml.load    # use yaml.safe_load instead
+      - subprocess.shell=True
+
+style:
+  # Enforce docstrings on public functions/classes
+  require_docstrings: true
+  docstring_style: google        # google | numpy | sphinx
+
+  # Import ordering
+  enforce_import_order: true     # isort-compatible
+
+  # Complexity hints for performance
+  warn_on_quadratic_loops: true
+  warn_on_global_state: true
+
+severity_overrides:
+  # Override default severity for specific rule IDs
+  # Format: rule_id: critical | warning | info
+  hardcoded_secret: critical
+  sql_injection: critical
+  eval_usage: critical
+  missing_docstring: info
+  line_too_long: info
